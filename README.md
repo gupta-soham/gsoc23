@@ -59,13 +59,11 @@ Here are some highlights of what I was able to accomplish over the course of the
 ./vlc.exe video.mp4 --input-slave=sub.srt --sout="chromecast{ip=[ip address]}" --demux-filter=cc_demux --no-plugins-cache -vv | cat -
 
 ```
-
 <table>
     <tr>
         <td><img src="https://github.com/gupta-soham/gsoc23/assets/97831613/9e58dd22-9f21-4621-973c-f5953e5d8d0c"></td>
         <td><img src="https://github.com/gupta-soham/gsoc23/assets/97831613/623bc8c5-8ce8-489c-80a0-f4b1151c8c82"></td>
         <td><img src="https://github.com/gupta-soham/gsoc23/assets/97831613/aa66140d-6db3-43b7-bed3-7052de313b18"></td>
-    </tr>
 </table>
 
 #### ASS Format
@@ -77,9 +75,9 @@ Here are some highlights of what I was able to accomplish over the course of the
 ```
 <table>
     <tr>
-        <td><img src=""></td>
-        <td><img src=""></td>
-        <td><img src=""></td>
+        <td><img src="https://github.com/gupta-soham/gsoc23/assets/97831613/d2019053-4266-4407-aabb-232a77e6ef81"></td>
+        <td><img src="https://github.com/gupta-soham/gsoc23/assets/97831613/75d8fc7a-67c8-417d-88b9-ca0191d2f6cb"></td>
+        <td><img src="https://github.com/gupta-soham/gsoc23/assets/97831613/87a59a33-0d09-4969-b666-52666387623f"></td>
     </tr>
 </table>
 
@@ -92,9 +90,9 @@ Here are some highlights of what I was able to accomplish over the course of the
 ```
 <table>
     <tr>
-        <td><img src=""></td>
-        <td><img src=""></td>
-        <td><img src=""></td>
+        <td><img src="https://github.com/gupta-soham/gsoc23/assets/97831613/c06ee052-6a4c-4f56-b938-47e63ec31d4d"></td>
+        <td><img src="https://github.com/gupta-soham/gsoc23/assets/97831613/2f71b2d7-400f-44a8-b909-cc77fcd7d5fe"></td>
+        <td><img src="https://github.com/gupta-soham/gsoc23/assets/97831613/b6cceece-edda-404f-a633-d5525b247631"></td>
     </tr>
 </table>
 
