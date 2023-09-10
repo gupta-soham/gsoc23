@@ -24,6 +24,11 @@ I worked primarily on the `chromecast-hls` branch under the guidance of my mento
 
 Here are some highlights of what I was able to accomplish over the course of the program:
 
+### Transcoding Bug Fix
+
+- :bug: Fixed a bug in the transcode module to resolve synchronization issues when using `transcode:display` with paced outputs(UDP, HLS and display)
+- :white_check_mark: Successfully closed issue [#25959](https://code.videolan.org/videolan/vlc/-/issues/25959) through this bug fix
+
 ### H.265/HEVC Video Codec Implementation
 
 - :mag: Researched details of implementing H.265 support 
@@ -42,21 +47,74 @@ Here are some highlights of what I was able to accomplish over the course of the
 
 - :speech_balloon: Successfully blended SRT subtitles with videos using soverlay parameter
 - :rewind: Fixed timing issues causing subtitles to be out of sync
-- :closed_book: Explored advanced subtitle formats like ASS, WebVTT but faced rendering issues
+- :open_book: Explored advanced subtitle formats like ASS, WebVTT but faced rendering issues at times
 
-### Transcoding Bug Fix
+### Testing Subtitle Blending (Windows Build)
 
-- :bug: Fixed a bug in the transcode module to resolve synchronization issues when using `transcode:display` with paced outputs(UDP, HLS and display)
-- :white_check_mark: Successfully closed issue [#25959](https://code.videolan.org/videolan/vlc/-/issues/25959) through this bug fix
+#### SRT Format
+
+- Used the following command to blend SRT subtitles:
+
+```
+./vlc.exe video.mp4 --input-slave=sub.srt --sout="chromecast{ip=[ip address]}" --demux-filter=cc_demux --no-plugins-cache -vv | cat -
+
+```
+
+<table>
+    <tr>
+        <td><img src="https://github.com/gupta-soham/gsoc23/assets/97831613/9e58dd22-9f21-4621-973c-f5953e5d8d0c"></td>
+        <td><img src="https://github.com/gupta-soham/gsoc23/assets/97831613/623bc8c5-8ce8-489c-80a0-f4b1151c8c82"></td>
+        <td><img src="https://github.com/gupta-soham/gsoc23/assets/97831613/aa66140d-6db3-43b7-bed3-7052de313b18"></td>
+    </tr>
+</table>
+
+#### ASS Format
+
+- Used the following command to blend ASS subtitles:
+
+```
+./vlc.exe video.mp4 --input-slave=sub.ass --sout="chromecast{ip=[ip address]}" --demux-filter=cc_demux --no-plugins-cache -vv | cat -  
+```
+<table>
+    <tr>
+        <td><img src=""></td>
+        <td><img src=""></td>
+        <td><img src=""></td>
+    </tr>
+</table>
+
+#### WebVTT Format
+
+- Used the following command to blend WebVTT subtitles:
+
+```
+./vlc.exe video.mp4 --input-slave=sub.vtt --sout="chromecast{ip=[ip address]}" --demux-filter=cc_demux --no-plugins-cache -vv | cat -
+```
+<table>
+    <tr>
+        <td><img src=""></td>
+        <td><img src=""></td>
+        <td><img src=""></td>
+    </tr>
+</table>
+
+### Tracing Flush sout callback
+
+- :x: Trace module did not log Flush events in the JSON file in the Windows build
+
+- :alarm_clock: Added timestamps for Flush events to enable tracing
+
+- :chart_with_upwards_trend: Traced video frames to analyze timestamp issues
 
 
 ## Contributions
 
 Over the course of GSoC 2023, I made the following contributions to the VLC project:
 
-- 2 merge requests merged :twisted_rightwards_arrows:
+- Created 3 merge requests over the course of the program :twisted_rightwards_arrows:
     - [Transcoding Bux Fix](https://code.videolan.org/videolan/vlc/-/merge_requests/3804)
     - [HEVC Video Codec Implementation](https://code.videolan.org/asenat/vlc/-/merge_requests/19)
+    - [fix: trace `Flush` sout callback]()
 - Patches for issues like HTTPD URL deletion, GnuTLS, etc
 - Clear documentation doubts through daily logs and merge request descriptions
 - Responded to code reviews and made changes as per suggestions
@@ -67,9 +125,11 @@ Over the course of GSoC 2023, I made the following contributions to the VLC proj
 Through this project, I greatly improved my skills in areas like:
 
 - :wrench: Tooling - gcc, clang, docker, ffmpeg
-- :computer: Application development - VLC architecture, FFmpeg transcoding, Chromecast protocols 
-- :octocat: Open source workflow - version control, build troubleshooting, submitting merge requests
+- :computer: Application development - VLC architecture, FFmpeg transcoding, Chromecast protocols
+- :octocat: Open Source Workflow - version control, build troubleshooting, submitting merge requests
+    - Git Version Control --> `git commit --amend`, `git stash`, `git rebase`, `git reflog`, splitting commits, changing authors & many more in the process
 - :pencil2: Technical communication - daily logs, merge request descriptions, collaborating with mentor
+
 
 ## Future Scope
 
@@ -107,7 +167,29 @@ Throughout the program, I encountered various challenges that tested my problem-
 By persevering through these roadblocks, I improved my debugging skills and learned how to approach problems methodically. Special thanks to my mentor for their invaluable guidance when I was stuck.
 
 
+## Final Weeks' Work
+
+- :hourglass: Added delays using `vlc_tick_sleep` to extend video casting
+
+- :bug: Debugged asserts and crashes during Chromecast streaming
+
+- :white_check_mark: Got WebVTT subtitle blending working with Chromecast
+
+- :package: Committed and pushed all code changes to respective branches which I made throughout the project timeline
+
+
+## Branches Worked On
+
+| Branch | Overview | Commits |
+|-|-|-|  
+| [chromecast-hls](https://code.videolan.org/sohamgupta/vlc/-/tree/chromecast-hls?ref_type=heads) | Initial work on Chromecast streaming | [View](https://code.videolan.org/sohamgupta/vlc/-/commits/chromecast-hls?ref_type=heads) |
+| [rebased/chromecast-hls.2](https://code.videolan.org/sohamgupta/vlc/-/tree/rebased/chromecast-hls.2?ref_type=heads) | Final work on Chromecast streaming | [View](https://code.videolan.org/sohamgupta/vlc/-/commits/rebased/chromecast-hls.2?ref_type=heads) |
+| [sout-hls.4](https://code.videolan.org/sohamgupta/vlc/-/tree/sout-hls.4?ref_type=heads) | H.265 codec implementation | [View](https://code.videolan.org/sohamgupta/vlc/-/commits/sout-hls.4?ref_type=heads) |
+| [fix/transcode](https://code.videolan.org/sohamgupta/vlc/-/tree/fix%2Ftranscode?ref_type=heads) | Transcoding synchronization fix | [View](https://code.videolan.org/sohamgupta/vlc/-/commits/fix%2Ftranscode?ref_type=heads) |
+| [trace](https://code.videolan.org/sohamgupta/vlc/-/tree/trace?ref_type=heads) | Added tracing module | [View](https://code.videolan.org/sohamgupta/vlc/-/commits/trace?ref_type=heads) |
+
+
 ## Acknowledgments
 
-I'm grateful to my mentor Alaric Sénat for their invaluable guidance and support throughout this enriching journey.  
-:pray: And a big thanks to the VideoLAN's VLC project maintainers and Google Summer of Code program for giving me this opportunity to learn and grow as a developer!
+I'm grateful to my mentor Alaric Sénat for his invaluable guidance and support throughout this enriching journey.  
+:pray: And a big thanks to the VideoLAN's VLC project maintainers and Google Summer of Code program for giving me this opportunity to learn and grow as a developer:man_technologist:!
