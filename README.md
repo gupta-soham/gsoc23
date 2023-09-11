@@ -112,7 +112,7 @@ Over the course of GSoC 2023, I made the following contributions to the VLC proj
 - Created 3 merge requests over the course of the program :twisted_rightwards_arrows:
     - [Transcoding Bux Fix](https://code.videolan.org/videolan/vlc/-/merge_requests/3804)
     - [HEVC Video Codec Implementation](https://code.videolan.org/asenat/vlc/-/merge_requests/19)
-    - [fix: trace `Flush` sout callback]()
+    - [Traced `Flush` events](https://code.videolan.org/videolan/vlc/-/merge_requests/4250)
 - Patches for issues like HTTPD URL deletion, GnuTLS, etc
 - Clear documentation doubts through daily logs and merge request descriptions
 - Responded to code reviews and made changes as per suggestions
