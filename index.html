@@ -1,0 +1,221 @@
+<!DOCTYPE html>	
+<html>	
+  <head>	
+    <title>Google Summer of Code 2023 Work Product Submission</title>	
+    <meta charset="utf-8">	
+    <meta name="viewport" content="width=device-width, initial-scale=1">	
+    <link rel="stylesheet" type="text/css" href="styles.css">	
+  </head>	
+
+  <!-- <header>	
+    <center>	
+    <button id="theme-toggle">Toggle Theme</button></header>	
+    </center>	
+  </header> -->
+
+  <body>
+    <main>
+
+      <h1 id="google-summer-of-code-2023-work-product-submission">Google Summer of Code 2023 Work Product Submission</h1>
+      <h3 id="student-soham-guptahttpscodevideolanorgsohamgupta">Student: <a href="https://code.videolan.org/sohamgupta">Soham Gupta</a></h3>
+      <h3 id="organisation-videolanhttpswwwvideolanorg">Organisation: <a href="https://www.videolan.org/">VideoLAN</a></h3>
+      <h3 id="project-improve-chromecast-support-subtitleshttpssummerofcodewithgooglecomprograms2023projects465xupyw">Project: <a href="https://summerofcode.withgoogle.com/programs/2023/projects/465XuPyw">Improve Chromecast Support (subtitles)</a></h3>
+      
+      <h2 id="introduction">Introduction</h2>
+      <p>Over the past 3 months, I had the opportunity to work on the VLC project for Google Summer of Code 2023. It was an invaluable learning experience that helped me grow my skills in software development and open source contribution. In this blog, I'll summarize my work and key learnings.</p>
+      
+      <h2 id="about-the-project">About the Project</h2>
+      <p>🎥 The project involved enhancing the capabilities of VLC's HTTP Live Streaming (HLS) module by:</p>
+      <ul>
+      <li class="task-list-item" style="list-style-type: none;"><input type="checkbox" disabled style="margin: 0px 0.35em 0.25em -1.6em; vertical-align: middle;" checked> Implementing support for H.265/HEVC video codec</li>
+      <li class="task-list-item" style="list-style-type: none;"><input type="checkbox" disabled style="margin: 0px 0.35em 0.25em -1.6em; vertical-align: middle;" checked> Improving performance of video casting to Chromecast </li>
+      <li class="task-list-item" style="list-style-type: none;"><input type="checkbox" disabled style="margin: 0px 0.35em 0.25em -1.6em; vertical-align: middle;" checked> Enabling blending of subtitles with videos</li>
+      </ul>
+      <p>I worked primarily on the <code>chromecast-hls</code> branch under the guidance of my mentor Alaric Sénat and org admins Thomas Guillem and Jean-Baptiste Kempf.</p>
+      
+      <h2 id="work-summary">Work Summary</h2>
+      <p>Here are some highlights of what I was able to accomplish over the course of the program:</p>  
+      <h3 id="transcoding-bug-fix">Transcoding Bug Fix</h3>
+      <ul>
+      <li>🐛 Fixed a bug in the transcode module to resolve synchronization issues when using <code>transcode:display</code> with paced outputs(UDP, HLS and display)</li>
+      <li>✅ Successfully closed issue <a href="https://code.videolan.org/videolan/vlc/-/issues/25959">#25959</a> through this bug fix</li>
+      </ul>
+      
+      <h3 id="h265hevc-video-codec-implementation">H.265/HEVC Video Codec Implementation</h3>
+      <ul>
+      <li>🔍 Researched details of implementing H.265 support </li>
+      <li>🔧 Added code to generate H.265 codec information in <code>codecs.c</code></li>
+      <li>✅ Transcoded sample videos to H.265 using ffmpeg and tested with hls module</li>
+      <li>❌ Faced challenges manipulating profile/level values to match H.265 codec syntax</li>
+      </ul>
+      
+      <h3 id="chromecast-performance-improvements">Chromecast Performance Improvements</h3>
+      <ul>
+      <li>🔌 Troubleshot various connectivity issues between VLC and Chromecast device</li>
+      <li>:construction_worker: Rebuilt code frequently to address streaming problems </li>
+      <li>📶 Worked around WSL2 network limitations to get video casting working</li>
+      <li>💤 Reduced lag and improved synchronization of audio/video casting</li>
+      </ul>
+      
+      <h3 id="subtitle-blending">Subtitle Blending</h3>
+      <ul>
+      <li>💬 Successfully blended SRT subtitles with videos using soverlay parameter</li>
+      <li>⏪ Fixed timing issues causing subtitles to be out of sync</li>
+      <li>:open_book: Explored advanced subtitle formats like ASS, WebVTT but faced rendering issues at times</li>
+      </ul>
+      
+      <h3 id="testing-subtitle-blending-windows-build">Testing Subtitle Blending (Windows Build)</h3>
+      <h4 id="srt-format">SRT Format</h4>
+      <ul>
+      <li>Used the following command to blend SRT subtitles:</li>
+      </ul>
+      <pre><code class="hljs"><span class="hljs-string">./vlc.exe</span> video.mp4 <span class="hljs-params">--input-slave=sub</span>.srt <span class="hljs-params">--sout=</span><span class="hljs-string">&quot;chromecast{ip=[ip address]}&quot;</span> <span class="hljs-params">--demux-filter=cc_demux</span> <span class="hljs-params">--no-plugins-cache</span> -vv | cat -</code></pre>
+      <table>
+          <tr>
+              <td><img src="https://github.com/gupta-soham/gsoc23/assets/97831613/9e58dd22-9f21-4621-973c-f5953e5d8d0c"></td>
+              <td><img src="https://github.com/gupta-soham/gsoc23/assets/97831613/623bc8c5-8ce8-489c-80a0-f4b1151c8c82"></td>
+              <td><img src="https://github.com/gupta-soham/gsoc23/assets/97831613/aa66140d-6db3-43b7-bed3-7052de313b18"></td>
+      </table>
+
+      <h4 id="ass-format">ASS Format</h4>
+      <ul>
+      <li>Used the following command to blend ASS subtitles:</li>
+      </ul>
+      <pre><code class="hljs"><span class="hljs-string">./vlc.exe</span> video.mp4 <span class="hljs-params">--input-slave=sub</span>.ass <span class="hljs-params">--sout=</span><span class="hljs-string">&quot;chromecast{ip=[ip address]}&quot;</span> <span class="hljs-params">--demux-filter=cc_demux</span> <span class="hljs-params">--no-plugins-cache</span> -vv | cat -  </code></pre>
+      <table>
+          <tr>
+              <td><img src="https://github.com/gupta-soham/gsoc23/assets/97831613/d2019053-4266-4407-aabb-232a77e6ef81"></td>
+              <td><img src="https://github.com/gupta-soham/gsoc23/assets/97831613/75d8fc7a-67c8-417d-88b9-ca0191d2f6cb"></td>
+              <td><img src="https://github.com/gupta-soham/gsoc23/assets/97831613/87a59a33-0d09-4969-b666-52666387623f"></td>
+          </tr>
+      </table>
+
+      <h4 id="webvtt-format">WebVTT Format</h4>
+      <ul>
+      <li>Used the following command to blend WebVTT subtitles:</li>
+      </ul>
+      <pre><code class="hljs"><span class="hljs-string">./vlc.exe</span> video.mp4 <span class="hljs-params">--input-slave=sub</span>.vtt <span class="hljs-params">--sout=</span><span class="hljs-string">&quot;chromecast{ip=[ip address]}&quot;</span> <span class="hljs-params">--demux-filter=cc_demux</span> <span class="hljs-params">--no-plugins-cache</span> -vv | cat -</code></pre>
+      <table>
+          <tr>
+              <td><img src="https://github.com/gupta-soham/gsoc23/assets/97831613/c06ee052-6a4c-4f56-b938-47e63ec31d4d"></td>
+              <td><img src="https://github.com/gupta-soham/gsoc23/assets/97831613/2f71b2d7-400f-44a8-b909-cc77fcd7d5fe"></td>
+              <td><img src="https://github.com/gupta-soham/gsoc23/assets/97831613/b6cceece-edda-404f-a633-d5525b247631"></td>
+          </tr>
+      </table>
+
+      <h3 id="tracing-flush-sout-callback">Tracing Flush sout callback</h3>
+      <ul>
+      <li><p>❌ Trace module did not log Flush events in the JSON file in the Windows build</p></li>
+      <li><p>⏰ Added timestamps for Flush events to enable tracing</p></li>
+      <li><p>📈 Traced video frames to analyze timestamp issues</p></li>
+      </ul>
+
+      <h2 id="contributions">Contributions</h2>
+      <p>Over the course of GSoC 2023, I made the following contributions to the VLC project:</p>
+      <ul>
+      <li>Created 3 merge requests over the course of the program 🔀<ul>
+      <li><a href="https://code.videolan.org/videolan/vlc/-/merge_requests/3804">Transcoding Bux Fix</a></li>
+      <li><a href="https://code.videolan.org/asenat/vlc/-/merge_requests/19">HEVC Video Codec Implementation</a></li>
+      <li><a href="https://code.videolan.org/videolan/vlc/-/merge_requests/4250">Traced <code>Flush</code> events</a></li>
+      <li>Patches for issues like HTTPD URL deletion, GnuTLS, etc</li>
+      <li>Clear documentation doubts through daily logs and merge request descriptions</li>
+      <li>Responded to code reviews and made changes as per suggestions</li>
+      </ul>
+
+      <h2 id="learning-outcomes">Learning Outcomes</h2>
+      <p>Through this project, I greatly improved my skills in areas like:</p>
+      <ul>
+      <li>🔧 Tooling - gcc, clang, docker, ffmpeg</li>
+      <li>💻 Application development - VLC architecture, FFmpeg transcoding, Chromecast protocols</li>
+      <li><img alt=":octocat:" height="20" width="20" align="absmiddle" src="https://github.githubassets.com/images/icons/emoji/octocat.png"> Open Source Workflow - version control, build troubleshooting, submitting merge requests<ul>
+      <li>Git Version Control --&gt; <code>git commit --amend</code>, <code>git stash</code>, <code>git rebase</code>, <code>git reflog</code>, splitting commits, changing authors &amp; many more in the process</li></ul></li>
+      <li>✏️ Technical communication - daily logs, merge request descriptions, collaborating with mentor</li>
+      </ul>
+
+      <h2 id="future-scope">Future Scope</h2>
+      <p>While I was able to complete core objectives, some areas of improvement remain:</p>
+      <ul>
+      <li class="task-list-item" style="list-style-type: none;"><input type="checkbox" disabled style="margin: 0px 0.35em 0.25em -1.6em; vertical-align: middle;"> Add support of fragmented mp4 in the HLS server</li>
+      <li class="task-list-item" style="list-style-type: none;"><input type="checkbox" disabled style="margin: 0px 0.35em 0.25em -1.6em; vertical-align: middle;"> Achieve 1:1 matching of H.265 codec profile/level values</li>
+      <li class="task-list-item" style="list-style-type: none;"><input type="checkbox" disabled style="margin: 0px 0.35em 0.25em -1.6em; vertical-align: middle;"> Reduce audio/video sync issues during Chromecast streaming</li>
+      <li class="task-list-item" style="list-style-type: none;"><input type="checkbox" disabled style="margin: 0px 0.35em 0.25em -1.6em; vertical-align: middle;"> Support text subtitle formats like WebVTT</li>
+      <li class="task-list-item" style="list-style-type: none;"><input type="checkbox" disabled style="margin: 0px 0.35em 0.25em -1.6em; vertical-align: middle;"> Improve modularisation and memory management</li>
+      </ul>
+      <p>I'm excited to continue contributing to VLC and build on the work done during GSoC 2023.</p>
+      
+      <h2 id="challenges-faced-boom">Challenges Faced 💥</h2>
+      <p>Throughout the program, I encountered various challenges that tested my problem-solving skills:</p>
+      <ul>
+      <li><p>🔌 Connectivity issues between VLC and the Chromecast device due to network limitations of WSL2. This required extensive troubleshooting.</p></li>
+      <li><p>🔧 Frequent rebuild errors during cross-compilation that needed debugging of outdated contribs and prebuilt contribs.</p></li>
+      <li><p>❌ Manipulating the profile and level values to match the H.265 codec syntax was difficult without proper documentation.</p></li>
+      <li><p>⏪ Synchronization problems between audio and video streams during Chromecast casting. Identifying the root cause took time.</p></li>
+      <li><p>💤 Limitations on video segment duration and buffers caused intermittent casting failures.</p></li>
+      <li><p>🐛 The initial part of videos without audio failed to render in the transcoded stream.</p></li>
+      <li><p>❓ Absence of logs and abrupt UI closures made it hard to pinpoint errors.</p></li>
+      <li><p>⚒ Frequent merge conflicts and overwrite errors while rebasing branches caused delays.</p></li>
+      </ul>
+      <p>By persevering through these roadblocks, I improved my debugging skills and learned how to approach problems methodically. Special thanks to my mentor for their invaluable guidance when I was stuck.</p>
+      
+      <h2 id="final-weeks-work">Final Weeks' Work</h2>
+      <ul>
+      <li><p>⌛️ Added delays using <code>vlc_tick_sleep</code> to extend video casting</p></li>
+      <li><p>🐛 Debugged asserts and crashes during Chromecast streaming</p></li>
+      <li><p>✅ Got WebVTT subtitle blending working with Chromecast</p></li>
+      <li><p>📦 Committed and pushed all code changes to respective branches which I made throughout the project timeline</p></li>
+      </ul>
+
+      <h2 id="branches-worked-on">Branches Worked On</h2>
+        <table>
+          <thead>
+          <tr>
+          <th>Branch</th>
+          <th>Overview</th>
+          <th>Commits</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+          <td><a href="https://code.videolan.org/sohamgupta/vlc/-/tree/chromecast-hls?ref_type=heads">chromecast-hls</a></td>
+          <td>Initial work on Chromecast streaming</td>
+          <td><a href="https://code.videolan.org/sohamgupta/vlc/-/commits/chromecast-hls?ref_type=heads">View</a></td>
+          </tr>
+          <tr>
+          <td><a href="https://code.videolan.org/sohamgupta/vlc/-/tree/rebased/chromecast-hls.2?ref_type=heads">rebased/chromecast-hls.2</a></td>
+          <td>Final work on Chromecast streaming</td>
+          <td><a href="https://code.videolan.org/sohamgupta/vlc/-/commits/rebased/chromecast-hls.2?ref_type=heads">View</a></td>
+          </tr>
+          <tr>
+          <td><a href="https://code.videolan.org/sohamgupta/vlc/-/tree/sout-hls.4?ref_type=heads">sout-hls.4</a></td>
+          <td>H.265 codec implementation</td>
+          <td><a href="https://code.videolan.org/sohamgupta/vlc/-/commits/sout-hls.4?ref_type=heads">View</a></td>
+          </tr>
+          <tr>
+          <td><a href="https://code.videolan.org/sohamgupta/vlc/-/tree/fix%2Ftranscode?ref_type=heads">fix/transcode</a></td>
+          <td>Transcoding synchronization fix</td>
+          <td><a href="https://code.videolan.org/sohamgupta/vlc/-/commits/fix%2Ftranscode?ref_type=heads">View</a></td>
+          </tr>
+          <tr>
+          <td><a href="https://code.videolan.org/sohamgupta/vlc/-/tree/trace?ref_type=heads">trace</a></td>
+          <td>Added tracing module</td>
+          <td><a href="https://code.videolan.org/sohamgupta/vlc/-/commits/trace?ref_type=heads">View</a></td>
+          </tr>
+          </tbody>
+          </table>
+        
+      <h2 id="acknowledgments">Acknowledgments</h2>
+      <p>I'm grateful to my mentor Alaric Sénat for his invaluable guidance and support throughout this enriching journey.  <br />
+      🙏 And a big thanks to the VideoLAN's VLC project maintainers and Google Summer of Code program for giving me this opportunity to learn and grow as a developer👨&zwj;💻!</p>
+
+      <center><button class="readme">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M12 0.296997C5.37 0.296997 0 5.67 0 12.297C0 17.6 3.438 22.097 8.205 23.682C8.805 23.795 9.025 23.424 9.025 23.105C9.025 22.82 9.015 22.065 9.01 21.065C5.672 21.789 4.968 19.455 4.968 19.455C4.422 18.07 3.633 17.7 3.633 17.7C2.546 16.956 3.717 16.971 3.717 16.971C4.922 17.055 5.555 18.207 5.555 18.207C6.625 20.042 8.364 19.512 9.05 19.205C9.158 18.429 9.467 17.9 9.81 17.6C7.145 17.3 4.344 16.268 4.344 11.67C4.344 10.36 4.809 9.29 5.579 8.45C5.444 8.147 5.039 6.927 5.684 5.274C5.684 5.274 6.689 4.952 8.984 6.504C9.944 6.237 10.964 6.105 11.984 6.099C13.004 6.105 14.024 6.237 14.984 6.504C17.264 4.952 18.269 5.274 18.269 5.274C18.914 6.927 18.509 8.147 18.389 8.45C19.154 9.29 19.619 10.36 19.619 11.67C19.619 16.28 16.814 17.295 14.144 17.59C14.564 17.95 14.954 18.686 14.954 19.81C14.954 21.416 14.939 22.706 14.939 23.096C14.939 23.411 15.149 23.786 15.764 23.666C20.565 22.092 24 17.592 24 12.297C24 5.67 18.627 0.296997 12 0.296997Z" fill="white"></path>
+        </svg>
+        <!-- <a href="https://github.com/gupta-soham/gsoc23/tree/main" style="color: white;" onmouseover="this.style.color='#E46D00';" onmouseout="this.style.color='white';">README.md</a> -->
+        <a href="https://github.com/gupta-soham/gsoc23/tree/main">README.md</a>
+      </button></center>
+
+    </main>
+    <script src="script.js"></script>
+  </body>
+</html>
